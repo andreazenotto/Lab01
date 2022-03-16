@@ -3,6 +3,7 @@ package it.polito.tdp.parole;
 import it.polito.tdp.parole.model.Parole;
 
 import java.net.URL;
+import java.util.*;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,15 +32,44 @@ public class FXMLController {
 
     @FXML
     private Button btnReset;
+    
+    @FXML
+    private Button btnCancella;
+    
+    @FXML
+    private TextField txtTime;
+    
+    String descriveList() {
+    	String stringa = "";
+    	for(String s: this.elenco.getElenco()) {
+    		if(stringa.compareTo("")!=0)
+    			stringa += "\n";
+    		stringa += s;
+    	}
+    	return stringa;
+    }
 
     @FXML
     void doInsert(ActionEvent event) {
-    	// TODO
+    	this.elenco.addParola(this.txtParola.getText());
+    	this.txtParola.setText("");
+    	this.txtResult.setText(this.descriveList());
+    	this.txtTime.setText(System.nanoTime()+" nanosecondi");
     }
 
     @FXML
     void doReset(ActionEvent event) {
-    	// TODO
+    	this.elenco.reset();
+    	this.txtParola.setText("");
+    	this.txtResult.setText("");
+    	this.txtTime.setText(System.nanoTime()+" nanosecondi");
+    }
+    
+    @FXML
+    void doCancella(ActionEvent event) {
+    	this.elenco.remove(this.txtResult.getSelectedText());
+    	this.txtResult.setText(this.descriveList());
+    	this.txtTime.setText(System.nanoTime()+" nanosecondi");
     }
 
     @FXML
